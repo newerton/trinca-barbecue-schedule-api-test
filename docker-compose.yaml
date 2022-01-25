@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: barbecue-api-nginx
+    restart: always
+    ports:
+      - '8394:80'
+    volumes:
+      - web-root:/var/www/html
+      - ./.docker/development/nginx:/etc/nginx/conf.d
+    logging:
+      options:
+        max-size: "5m"
+        max-file: "1"
+    networks:
+      - app-network
+    depends_on:
+      - nodejs
+
+  nodejs:
+    build: .
+    container_name: barbecue-api-nodejs
+    restart: always
+    tty: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - /home/node/app/node_modules
+      - .:/home/node/app
+    logging:
+      options:
+        max-size: "5m"
+        max-file: "1"
+    networks:
+      - app-network
+    depends_on:
+      - redis
+
+volumes:
+  web-root:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
