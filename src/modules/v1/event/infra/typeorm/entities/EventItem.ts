@@ -5,22 +5,32 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
-@Entity('user')
-class User {
+import Event from './Event';
+
+@Entity('event_item')
+class EventItem {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column('uuid')
+  @Exclude()
+  event_id: string;
 
   @Column()
   name: string;
 
-  @Column({ unique: true })
-  email: string;
+  @Column()
+  amount: number;
 
   @Column()
-  @Exclude()
-  password: string;
+  has_beer: boolean;
+
+  @Column()
+  paid: boolean;
 
   @CreateDateColumn()
   @Exclude()
@@ -30,7 +40,9 @@ class User {
   @Exclude()
   updated_at: Date;
 
-  token: string;
+  @ManyToOne(() => Event, event => event.items)
+  @JoinColumn({ name: 'event_id' })
+  event: Event;
 }
 
-export default User;
+export default EventItem;

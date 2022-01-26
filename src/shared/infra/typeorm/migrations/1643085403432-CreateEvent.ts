@@ -4,7 +4,7 @@ export class CreateEvent1643085403432 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'events',
+        name: 'event',
         columns: [
           {
             name: 'id',
@@ -18,10 +18,6 @@ export class CreateEvent1643085403432 implements MigrationInterface {
           },
           {
             name: 'description',
-            type: 'varchar',
-          },
-          {
-            name: 'observation',
             type: 'varchar',
           },
           {
@@ -44,6 +40,6 @@ export class CreateEvent1643085403432 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('events');
+    await queryRunner.dropTable('event');
   }
 }

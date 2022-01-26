@@ -9,6 +9,8 @@ const joiMessages = (): LanguageMessages => {
     'number.max': '{#label} deve ter no máximo {#limit} números {#value}',
     'number.greater': '{#label} deve ser maior que {#limit} números',
     'number.less': '{#label} deve ser menor que {#limit} números {#value}',
+    'number.negative': '{#label} deve ser um número menor que 0(zero)',
+    'number.positive': '{#label} deve ser um número maior que 0(zero)',
     'postalCode.invalid': '{#label} inválido',
     'string.base': '{#label} inválida',
     'string.empty': '{#label} não pode ser vazio',
