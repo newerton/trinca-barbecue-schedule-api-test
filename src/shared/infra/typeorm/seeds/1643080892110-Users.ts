@@ -17,7 +17,7 @@ export class Users1643080892110 implements MigrationInterface {
       users.map(async user => {
         user.password = await hash(user.password, 8);
         return await queryRunner.query(
-          `INSERT INTO users (id, name, email, password) VALUES ('${user.id}', '${user.name}', '${user.email}', '${user.password}')`,
+          `INSERT INTO user (id, name, email, password) VALUES ('${user.id}', '${user.name}', '${user.email}', '${user.password}')`,
         );
       }),
     );
@@ -26,7 +26,7 @@ export class Users1643080892110 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<void> {
     await Promise.all(
       users.map(user =>
-        queryRunner.query(`DELETE FROM users WHERE email='${user.email}';`),
+        queryRunner.query(`DELETE FROM user WHERE email='${user.email}';`),
       ),
     );
   }

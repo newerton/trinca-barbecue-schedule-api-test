@@ -9,7 +9,7 @@ export class CreateEventItem1643085559053 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'event_items',
+        name: 'event_item',
         columns: [
           {
             name: 'id',
@@ -26,7 +26,7 @@ export class CreateEventItem1643085559053 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'value',
+            name: 'amount',
             type: 'varchar',
           },
           {
@@ -54,11 +54,11 @@ export class CreateEventItem1643085559053 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'event_items',
+      'event_item',
       new TableForeignKey({
-        name: 'fk-events-event_id',
+        name: 'fk-event-event_id',
         columnNames: ['event_id'],
-        referencedTableName: 'events',
+        referencedTableName: 'event',
         referencedColumnNames: ['id'],
         onUpdate: 'CASCADE'
       }),
@@ -66,7 +66,7 @@ export class CreateEventItem1643085559053 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    // await queryRunner.dropForeignKey('event_items', 'fk-events-event_id');
-    await queryRunner.dropTable('event_items');
+    await queryRunner.dropForeignKey('event_item', 'fk-event-event_id');
+    await queryRunner.dropTable('event_item');
   }
 }
