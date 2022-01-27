@@ -10,6 +10,10 @@ class FakeEventRepository implements IEventRepository {
     return findEvent;
   }
 
+  public async findAll(): Promise<Event[]> {
+    return this.events;
+  }
+
   public async create(eventData: any): Promise<Event> {
     const event = new Event();
 

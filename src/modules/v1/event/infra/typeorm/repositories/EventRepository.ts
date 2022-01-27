@@ -15,6 +15,15 @@ class EventRepository implements IEventRepository {
     return event;
   }
 
+  public async findAll(): Promise<Event[]> {
+    const where = 'DATE(date) >= DATE(CURRENT_TIMESTAMP)';
+    const event = await this.ormRepository.find({
+      where,
+      order: { date: 'ASC' },
+    });
+    return event;
+  }
+
   public async create(eventData: ICreateEventDTO): Promise<Event> {
     const event = this.ormRepository.create(eventData);
     await this.ormRepository.save(event);

@@ -20,6 +20,20 @@ yarn seed migration:run
 yarn dev
 ```
 
+## ⚒️ Build
+
+
+```
+cp ormconfig.example.ts ormconfig.ts
+```
+Abra o ormconfig.ts, e altere todos os caminhos de arquivos de <code>./src/</code> para <code>./dist/</code>, e as extensões de <code>.ts</code> para <code>.js</code>
+
+```
+yarn build
+node .\dist\shared\infra\http\server.js
+```
+
+
 ## 🌱 Seed
 
 ```
@@ -27,7 +41,6 @@ yarn dev
 ```
 
 ```
-name: 'Test'
-email: 'test@barbecue.io'
-password: 'abc123'
+email: test@barbecue.io
+password: abc123
 ```

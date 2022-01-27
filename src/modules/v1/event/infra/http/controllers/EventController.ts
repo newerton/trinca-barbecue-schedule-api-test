@@ -1,5 +1,6 @@
 import CreateEventService from '@modules/v1/event/services/CreateEventService';
 import ViewEventService from '@modules/v1/event/services/ViewEventService';
+import ListEventService from '@modules/v1/event/services/ListEventService';
 import { instanceToPlain } from 'class-transformer';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
@@ -23,6 +24,12 @@ export default class EventController {
     const { id } = request.params;
     const view = container.resolve(ViewEventService);
     const event = await view.execute(id);
-    return response.json(instanceToPlain(event));
+    return response.json(instanceToPlain(event, { groups: ['view'] }));
+  }
+
+  public async store(_: Request, response: Response): Promise<Response> {
+    const view = container.resolve(ListEventService);
+    const event = await view.execute();
+    return response.json(instanceToPlain(event, { groups: ['store'] }));
   }
 }

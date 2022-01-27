@@ -1,31 +1,27 @@
 import EventController from '@modules/v1/event/infra/http/controllers/EventController';
+import EventItemController from '@modules/v1/event/infra/http/controllers/EventItemController';
 import joiMessages from '@shared/infra/http/middlewares/joiMessages';
 import { celebrate, Segments, Joi as JoiBase } from 'celebrate';
 import { Router } from 'express';
-import { ErrorReport } from 'joi';
 import dateValidator from 'joi-date-dayjs';
 
 const eventRouter = Router();
 const eventController = new EventController();
+const eventItemController = new EventItemController();
 
 const Joi = JoiBase.extend(dateValidator);
+
+eventRouter.get('/', eventController.store);
 
 eventRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      date: Joi.date()
-        .format('DD/MM/YYYY')
-        .required()
-        .label('Data do evento')
-        .messages(joiMessages),
-      title: Joi.string()
-        .required()
-        .label('Título do evento')
-        .messages(joiMessages),
+      date: Joi.date().required().label('Data do evento').messages(joiMessages),
+      title: Joi.string().required().label('Descrição').messages(joiMessages),
       description: Joi.string()
-        .required()
-        .label('Descrição')
+        .allow(null, '')
+        .label('Observação')
         .messages(joiMessages),
       items: Joi.array()
         .items({
@@ -70,5 +66,14 @@ eventRouter.get(
   eventController.view,
 );
 
+eventRouter.get(
+  '/paid/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().guid({ version: 'uuidv4' }).required(),
+    },
+  }),
+  eventItemController.paid,
+);
 
 export default eventRouter;
