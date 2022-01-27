@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
   ManyToOne,
+  AfterLoad,
 } from 'typeorm';
 
 import Event from './Event';
@@ -43,6 +44,10 @@ class EventItem {
   @ManyToOne(() => Event, event => event.items)
   @JoinColumn({ name: 'event_id' })
   event: Event;
+
+  @AfterLoad() _convertNumerics() {
+    this.amount = parseFloat(this.amount as any);
+  }
 }
 
 export default EventItem;
