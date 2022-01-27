@@ -14,11 +14,23 @@ Este repositório faz parte de um teste de conhecimento, se você estiver fazend
 
 ```
 cp .env.example .env
+cp ormconfig.example.ts ormconfig.ts
 yarn install
 yarn typeorm migration:run
 yarn seed migration:run
 yarn dev
 ```
+
+## ⚒️ Build
+
+
+Abra o ormconfig.ts, e altere todos os caminhos das pastas, de <code>./src/</code> para <code>./dist/</code>, e as extensões de <code>.ts</code> para <code>.js</code>
+
+```
+yarn build
+node .\dist\shared\infra\http\server.js
+```
+
 
 ## 🌱 Seed
 
@@ -27,7 +39,6 @@ yarn dev
 ```
 
 ```
-name: 'Test'
-email: 'test@barbecue.io'
-password: 'abc123'
+email: test@barbecue.io
+password: abc123
 ```
