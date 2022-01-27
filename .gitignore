@@ -7,3 +7,5 @@ temp/
 .env
 .history/
 coverage/
+ormconfig.ts
+dist/

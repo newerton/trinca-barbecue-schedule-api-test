@@ -5,12 +5,19 @@ import { v4 } from 'uuid';
 class FakeEventItemRepository implements IEventItemRepository {
   private items: EventItem[] = [];
 
-  public async findAll(event_id: string): Promise<EventItem[] | undefined> {
-    const findEventItem = this.items.filter(event => event.event_id === event_id);
+  public async findById(id: string): Promise<EventItem | undefined> {
+    const findEventItem = this.items.find(event => event.id === id);
     return findEventItem;
   }
 
-  public async create(eventData: any): Promise<EventItem[]> {
+  public async findAll(event_id: string): Promise<EventItem[] | undefined> {
+    const findEventItem = this.items.filter(
+      event => event.event_id === event_id,
+    );
+    return findEventItem;
+  }
+
+  public async create(eventData: any): Promise<EventItem> {
     const event = new EventItem();
 
     Object.assign(
@@ -23,7 +30,13 @@ class FakeEventItemRepository implements IEventItemRepository {
 
     this.items.push(event);
 
-    return this.items;
+    return event;
+  }
+
+  public async save(data: EventItem): Promise<EventItem> {
+    const findIndex = this.items.findIndex(item => item.id === data.id);
+    this.items[findIndex] = data;
+    return data;
   }
 }
 

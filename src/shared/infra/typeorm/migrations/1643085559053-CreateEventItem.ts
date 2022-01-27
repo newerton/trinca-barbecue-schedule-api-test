@@ -66,7 +66,6 @@ export class CreateEventItem1643085559053 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('event_item', 'fk-event-event_id');
     await queryRunner.dropTable('event_item');
   }
 }

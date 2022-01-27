@@ -19,6 +19,7 @@ export class CreateEvent1643085403432 implements MigrationInterface {
           {
             name: 'description',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'date',
